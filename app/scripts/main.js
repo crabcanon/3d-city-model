@@ -47,6 +47,13 @@ function startup(Cesium){
     
     var viewer = new Cesium.Viewer('cesiumContainer');
     var scene = viewer.scene;
+    var camera = new Cesium.Camera(scene);
+    camera.position = new Cesium.Cartesian3();
+    camera.direction = Cesium.Cartesian3.negate(Cesium.Cartesian3.UNIT_Z, new Cesium.Cartesian3());
+    camera.up = Cesium.Cartesian3.clone(Cesium.Cartesian3.UNIT_Y);
+    camera.frustum.fov = Cesium.Math.PI_OVER_THREE;
+    camera.frustum.near = 1.0;
+    camera.frustum.far = 2.0;
     
     var COLORS = [new Cesium.Cartesian4(1.0, 0.0, 0.0, 1.0), // RED
                   new Cesium.Cartesian4(1.0, 1.0, 0.0, 1.0), // YELLOW
@@ -77,36 +84,55 @@ function startup(Cesium){
     var model;
     for (var i = 0; i < filenames.length; i++)  {
             model = scene.primitives.add(Cesium.Model.fromGltf({
-            url : '.AHYEMODEL/' + filenames[i],
+            url : 'AHYEMODEL/' + filenames[i],
             modelMatrix : modelMatrix
         }));
         model.id = i;
         buildings.push(model);
     }
  
-    function flyToRectangle() {
+    // function flyToRectangle() {
 
-        var west = 24.803748;
-        var south = 60.174774;
-        var east = 24.843746;
-        var north = 60.194235;
-        var rectangle = Cesium.Rectangle.fromDegrees(west, south, east, north);
+    //     var west = 24.803748;
+    //     var south = 60.178774 -0.035;
+    //     var east = 24.843746;
+    //     var north = 60.194235 -0.035;
+    //     var rectangle = Cesium.Rectangle.fromDegrees(west, south, east, north);
 
-        viewer.camera.flyTo({
-            destination : rectangle
-        });
 
-        // Show the rectangle.  Not required; just for show.
-        viewer.entities.add({
-            rectangle : {
-                coordinates : rectangle,
-                fill : false,
-                outline : false,
-                outlineColor : Cesium.Color.WHITE
-            }
+    //     viewer.camera.flyTo({
+    //         destination : rectangle,
+    //         orientation : {
+    //         heading : Cesium.Math.toRadians(0.0),
+    //         pitch : Cesium.Math.toRadians(-45.0),
+    //         roll : 0.0
+    //     }
+    //     });
+
+
+    //     // Show the rectangle.  Not required; just for show.
+    //     viewer.entities.add({
+    //         rectangle : {
+    //             coordinates : rectangle,
+    //             fill : false,
+    //             outline : false,
+    //             outlineColor : Cesium.Color.WHITE
+    //         }
+    //     });
+    // }
+    // flyToRectangle();
+
+    function flyToLocation(){
+            viewer.camera.flyTo({
+            destination : Cesium.Cartesian3.fromDegrees(24.826077, 60.182098-0.012, 1500.0),
+            orientation : {
+            heading : Cesium.Math.toRadians(0.0),
+            pitch : Cesium.Math.toRadians(-45.0),
+            roll : 0.0
+        }
         });
     }
-    flyToRectangle();
+    flyToLocation();
   }
   if (typeof Cesium !== "undefined") {
     startup(Cesium);

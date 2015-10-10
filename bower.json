@@ -1,0 +1,21 @@
+{
+  "name": "project",
+  "private": true,
+  "dependencies": {
+    "bootstrap": "~3.3.5"
+  },
+  "overrides": {
+    "bootstrap": {
+      "main": [
+        "less/bootstrap.less",
+        "dist/css/bootstrap.css",
+        "dist/js/bootstrap.js",
+        "dist/fonts/*"
+      ]
+    }
+  },
+  "devDependencies": {
+    "chai": "~3.3.0",
+    "mocha": "~2.3.3"
+  }
+}

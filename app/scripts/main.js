@@ -67,6 +67,14 @@ function startup(Cesium){
                 var primitive = pick.primitive;
                 var modelMaterial = pick.mesh.materials[0];
                 modelMaterial.setValue('diffuse', new Cesium.Cartesian4(1.0, 0.0, 0.0, 1.0));
+                
+                popup = new Cesium.InfoBox('cesiumContainer');
+                infoboxmodel = popup.viewModel;
+                infoboxmodel.titleText = "TESTING";
+                infoboxmodel.showInfo = true;
+                infoboxmodel.description = "Tryout of this wonderful feature";
+                console.log(popup.viewModel);
+
             }
         },
         Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK

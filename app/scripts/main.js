@@ -44,34 +44,44 @@ function startup(Cesium){
         '49-10-22-1_Building_LOD1.bgltf',
         '49-418-1-859_Building_LOD1.bgltf',
         '49-418-1-945_Building_LOD1.bgltf']
+    
     var viewer = new Cesium.Viewer('cesiumContainer');
     var scene = viewer.scene;
+    
+    var COLORS = [new Cesium.Cartesian4(1.0, 0.0, 0.0, 1.0), // RED
+                  new Cesium.Cartesian4(1.0, 1.0, 0.0, 1.0), // YELLOW
+                  new Cesium.Cartesian4(0.0, 1.0, 0.0, 1.0)] // GREEN
+    
     var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
     handler.setInputAction(
         function (e) {
             var pick = scene.pick(e.position);
             if (Cesium.defined(pick) && Cesium.defined(pick.node) && Cesium.defined(pick.mesh)) {
-                console.log('node: ' + pick.node.name + '. mesh: ' + pick.mesh.name);
+                var primitive = pick.primitive;
+                var modelMaterial = pick.mesh.materials[0];
+                modelMaterial.setValue('diffuse', new Cesium.Cartesian4(1.0, 0.0, 0.0, 1.0));
             }
         },
         Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
     );
+    
+    var buildings = [];
 
+    // (106,-26,5,0)
+    var offset_lon = -0.001946;
+    var offset_lat = 0.000190;
     var modelMatrix = Cesium.Transforms.eastNorthUpToFixedFrame(
-    //Cesium.Cartesian3.add(106,-26,5,0)
-    Cesium.Cartesian3.fromDegrees(24.827060 - 0.001946,60.185793 + 0.000190, -6.0));
+        Cesium.Cartesian3.fromDegrees(24.827060 + offset_lon, 60.185793 + offset_lat, -6.0)
+    );
 
-    var model = scene.primitives.add(Cesium.Model.fromGltf({
-    url : './AHYEMODEL/49-10-01-7_Building_LOD1.bgltf',
-    modelMatrix : modelMatrix,
-    scale : 1.0
-    }));
-
+    var model;
     for (var i = 0; i < filenames.length; i++)  {
-        scene.primitives.add(Cesium.Model.fromGltf({
-        url : './AHYEMODEL/' + filenames[i],
-        modelMatrix : modelMatrix
+            model = scene.primitives.add(Cesium.Model.fromGltf({
+            url : 'files/' + filenames[i],
+            modelMatrix : modelMatrix
         }));
+        model.id = i;
+        buildings.push(model);
     }
  
     function flyToRectangle() {

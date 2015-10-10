@@ -68,12 +68,12 @@ function startup(Cesium){
                 var id = primitive._id;
                 var modelMaterial = pick.mesh.materials[0];
                 modelMaterial.setValue('diffuse', new Cesium.Cartesian4(1.0, 0.0, 0.0, 1.0));
-<<<<<<< HEAD
+
                 console.log(primitive);
 
                 //Fetch real-time temperatures for each clickable building
                 getTemperature(id);
-=======
+
                 
                 popup = new Cesium.InfoBox('cesiumContainer');
                 infoboxmodel = popup.viewModel;
@@ -82,7 +82,7 @@ function startup(Cesium){
                 infoboxmodel.description = "Building number: " + primitive.id; // Add data from JSON
                 console.log(popup.viewModel);
 
->>>>>>> 3a85100d9c87f0d76fc1339ffbe751b5fd87588e
+
             }
         },
         Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
@@ -180,18 +180,17 @@ function startup(Cesium){
         }
         });
     }
-<<<<<<< HEAD
-    flyToRectangle();
+
+    flyToLocation();
 };
 
 if (typeof Cesium !== "undefined") {
 	startup(Cesium);
-=======
-    flyToLocation();
+
   }
   if (typeof Cesium !== "undefined") {
     startup(Cesium);
->>>>>>> 3a85100d9c87f0d76fc1339ffbe751b5fd87588e
+
 } else if (typeof require === "function") {
 	require(["Cesium"], startup);
 }

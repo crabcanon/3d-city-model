@@ -3,7 +3,10 @@
   "private": true,
   "dependencies": {
     "bootstrap": "~3.3.5",
-    "cesium": "cesiumjs#~1.14.0"
+    "cesium": "cesiumjs#~1.14.0",
+    "cubism": "~1.6.0",
+    "datetimepicker": "~2.4.5",
+    "moment": "~2.10.6"
   },
   "overrides": {
     "bootstrap": {

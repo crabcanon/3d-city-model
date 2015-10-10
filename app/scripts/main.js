@@ -58,13 +58,50 @@ function startup(Cesium){
             var pick = scene.pick(e.position);
             if (Cesium.defined(pick) && Cesium.defined(pick.node) && Cesium.defined(pick.mesh)) {
                 var primitive = pick.primitive;
+                var id = primitive._id;
                 var modelMaterial = pick.mesh.materials[0];
                 modelMaterial.setValue('diffuse', new Cesium.Cartesian4(1.0, 0.0, 0.0, 1.0));
+                console.log(primitive);
+
+                //Fetch real-time temperatures for each clickable building
+                getTemperature(id);
             }
         },
         Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
     );
-    
+
+    $('#datetimepicker1').datetimepicker({
+    	format: 'unixtime',
+    	startDate:'+2015/05/01'
+    });
+    $('#datetimepicker2').datetimepicker({
+    	format: 'unixtime'
+    });
+     
+    function getTemperature(buildingID){
+    	var data = dataToJson(buildingID);
+		return $.ajax({
+        	url: 'http://54.170.172.31:3000/api/temperatures',
+        	type: 'get',
+        	data: data,
+        	success: function (data) {
+        		console.log(data);
+        	},
+        	error: function(data){
+        		console.log(data);
+        	}
+        });
+    };
+
+    function dataToJson(buildingID){
+    	return {
+    		'aggregation-level': $('#timestamp').val(),
+    		'apartments': buildingID,
+    		'from': $('#datetimepicker1').val(),
+    		'to': $('#datetimepicker2').val()
+    	};
+    };
+
     var buildings = [];
 
     // (106,-26,5,0)
@@ -77,7 +114,7 @@ function startup(Cesium){
     var model;
     for (var i = 0; i < filenames.length; i++)  {
             model = scene.primitives.add(Cesium.Model.fromGltf({
-            url : '.AHYEMODEL/' + filenames[i],
+            url : 'AHYEMODEL/' + filenames[i],
             modelMatrix : modelMatrix
         }));
         model.id = i;
@@ -107,9 +144,10 @@ function startup(Cesium){
         });
     }
     flyToRectangle();
-  }
-  if (typeof Cesium !== "undefined") {
-    startup(Cesium);
+};
+
+if (typeof Cesium !== "undefined") {
+	startup(Cesium);
 } else if (typeof require === "function") {
-    require(["Cesium"], startup);
+	require(["Cesium"], startup);
 }

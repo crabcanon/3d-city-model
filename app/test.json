@@ -1,0 +1,151 @@
+{
+	"buildings": [
+		{
+			"id": "b1",
+			"name": "Design Factory",
+			"street": "street name",
+			"city": "Espoo",
+			"zip": "02203",
+			"height": 40,
+			"width": 100,
+			"depth": 30,
+			"unit": "meters",
+			"floors": 2,
+			"rooms": [
+				{
+					"id": "r1",
+					"name": "Room 01",
+					"area": 200,
+					"unit": "square meters",
+					"equipment": false
+				},
+				{
+					"id": "r2",
+					"name": "Room 02",
+					"area": 300,
+					"unit": "square meters",
+					"equipment": true
+				},
+				{
+					"id": "r3",
+					"name": "Room 03",
+					"area": 400,
+					"unit": "square meters",
+					"equipment": false
+				},
+				{
+					"id": "r4",
+					"name": "Room 04",
+					"area": 500,
+					"unit": "square meters",
+					"equipment": true
+				},
+				{
+					"id": "r5",
+					"name": "Room 05",
+					"area": 1000,
+					"unit": "square meters",
+					"equipment": true
+				}
+			]
+		},
+		{
+			"id": "b2",
+			"name": "SMT 10",
+			"street": "street name",
+			"city": "Espoo",
+			"zip": "02203",
+			"height": 200,
+			"width": 400,
+			"depth": 100,
+			"unit": "meters",
+			"floors": 2,
+			"rooms": [
+				{
+					"id": "r1",
+					"name": "Room 01",
+					"area": 200,
+					"unit": "square meters",
+					"equipment": true
+				},
+				{
+					"id": "r2",
+					"name": "Room 02",
+					"area": 200,
+					"unit": "square meters",
+					"equipment": true
+				},
+				{
+					"id": "r3",
+					"name": "Room 03",
+					"area": 200,
+					"unit": "square meters",
+					"equipment": true
+				},
+				{
+					"id": "r4",
+					"name": "Room 04",
+					"area": 200,
+					"unit": "square meters",
+					"equipment": true
+				},
+				{
+					"id": "r5",
+					"name": "Room 05",
+					"area": 200,
+					"unit": "square meters",
+					"equipment": true
+				}
+			]
+		},
+		{
+			"id": "b3",
+			"name": "JMT 6",
+			"street": "street name",
+			"city": "Espoo",
+			"zip": "02203",
+			"height": 100,
+			"width": 100,
+			"depth": 50,
+			"unit": "meters",
+			"floors": 2,
+			"rooms": [
+				{
+					"id": "r1",
+					"name": "Room 01",
+					"area": 200,
+					"unit": "square meters",
+					"equipment": true
+				},
+				{
+					"id": "r2",
+					"name": "Room 02",
+					"area": 200,
+					"unit": "square meters",
+					"equipment": true
+				},
+				{
+					"id": "r3",
+					"name": "Room 03",
+					"area": 200,
+					"unit": "square meters",
+					"equipment": true
+				},
+				{
+					"id": "r4",
+					"name": "Room 04",
+					"area": 200,
+					"unit": "square meters",
+					"equipment": true
+				},
+				{
+					"id": "r5",
+					"name": "Room 05",
+					"area": 200,
+					"unit": "square meters",
+					"equipment": true
+				}
+			]
+		}
+	]
+}

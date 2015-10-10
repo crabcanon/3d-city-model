@@ -2,7 +2,8 @@
   "name": "project",
   "private": true,
   "dependencies": {
-    "bootstrap": "~3.3.5"
+    "bootstrap": "~3.3.5",
+    "cesium": "cesiumjs#~1.14.0"
   },
   "overrides": {
     "bootstrap": {

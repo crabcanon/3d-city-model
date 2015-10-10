@@ -72,7 +72,7 @@ function startup(Cesium){
                 infoboxmodel = popup.viewModel;
                 infoboxmodel.titleText = "TESTING";
                 infoboxmodel.showInfo = true;
-                infoboxmodel.description = "Tryout of this wonderful feature";
+                infoboxmodel.description = "Building number: " + primitive.id; // Add data from JSON
                 console.log(popup.viewModel);
 
             }

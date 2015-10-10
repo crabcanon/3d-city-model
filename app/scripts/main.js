@@ -77,7 +77,7 @@ function startup(Cesium){
     var model;
     for (var i = 0; i < filenames.length; i++)  {
             model = scene.primitives.add(Cesium.Model.fromGltf({
-            url : 'files/' + filenames[i],
+            url : '.AHYEMODEL/' + filenames[i],
             modelMatrix : modelMatrix
         }));
         model.id = i;

@@ -48,6 +48,10 @@ function startup(Cesium){
     var viewer = new Cesium.Viewer('cesiumContainer');
     var scene = viewer.scene;
     var camera = new Cesium.Camera(scene);
+    
+    // null to indicate that no building is selected/active
+    var prevPick = null;
+
     camera.position = new Cesium.Cartesian3();
     camera.direction = Cesium.Cartesian3.negate(Cesium.Cartesian3.UNIT_Z, new Cesium.Cartesian3());
     camera.up = Cesium.Cartesian3.clone(Cesium.Cartesian3.UNIT_Y);
@@ -59,6 +63,9 @@ function startup(Cesium){
                   new Cesium.Cartesian4(1.0, 1.0, 0.0, 1.0), // YELLOW
                   new Cesium.Cartesian4(0.0, 1.0, 0.0, 1.0)] // GREEN
 
+    var GREY = new Cesium.Cartesian4(0.7, 0.7, 0.7, 1.0);
+    var HIGHLIGHT = new Cesium.Cartesian4(0.0, 1.0, 1.0, 1.0);
+
     var buildings = [];
 
     // (106,-26,5,0)
@@ -69,45 +76,36 @@ function startup(Cesium){
     );
 
     var model;
+    var counter = 0;
     for (var i = 0; i < filenames.length; i++)  {
             model = scene.primitives.add(Cesium.Model.fromGltf({
             url : 'AHYEMODEL/' + filenames[i],
             modelMatrix : modelMatrix
         }));
         model.id = i;
+        model.name = i;
         buildings.push(model);
+
+        Cesium.when(model.readyPromise).then(function(model) {
+          console.log(model.getMaterial('colour'));
+          counter++;
+          if (counter == filenames.length) {
+            var primitives = scene.primitives._primitives;
+            for (var i = 0; i < primitives.length ; i++) {
+                //var modelMaterial = primitives[i].mesh.materials[0];
+                var model = primitives[i];
+                var material = model.getMaterial("ColorEffectR225G87B143-material");  
+                material.setValue('diffuse', GREY);
+            }
+          }
+        }).otherwise(function(error){
+          console.log(error);
+        });
     }
 
-        // function flyToRectangle() {
-
-    //     var west = 24.803748;
-    //     var south = 60.178774 -0.035;
-    //     var east = 24.843746;
-    //     var north = 60.194235 -0.035;
-    //     var rectangle = Cesium.Rectangle.fromDegrees(west, south, east, north);
 
 
-    //     viewer.camera.flyTo({
-    //         destination : rectangle,
-    //         orientation : {
-    //         heading : Cesium.Math.toRadians(0.0),
-    //         pitch : Cesium.Math.toRadians(-45.0),
-    //         roll : 0.0
-    //     }
-    //     });
 
-
-    //     // Show the rectangle.  Not required; just for show.
-    //     viewer.entities.add({
-    //         rectangle : {
-    //             coordinates : rectangle,
-    //             fill : false,
-    //             outline : false,
-    //             outlineColor : Cesium.Color.WHITE
-    //         }
-    //     });
-    // }
-    // flyToRectangle();
 
     function flyToLocation(){
         viewer.camera.flyTo({
@@ -128,11 +126,30 @@ function startup(Cesium){
         function (e) {
             var pick = scene.pick(e.position);
             if (Cesium.defined(pick) && Cesium.defined(pick.node) && Cesium.defined(pick.mesh)) {
+                if (prevPick !== null) {
+                    // Empty prevPick
+                    // Give basic colour to building 
+                    var primitive = prevPick.primitive;
+                    //console.log(primitive);
+                    var id = primitive._id;
+                    var modelMaterial = prevPick.mesh.materials[0];
+                    
+                    modelMaterial.setValue('diffuse', GREY);
+                    //modelMaterial.setValue('diffuse', new Cesium.Cartesian4(0.0, 0.0, 0.0, 1.0));
+                    //console.log(flag);
+                    prevPick = null;
+                }
+
+
                 var primitive = pick.primitive;
+                //console.log(primitive);
                 var id = primitive._id;
                 var modelMaterial = pick.mesh.materials[0];
-                modelMaterial.setValue('diffuse', new Cesium.Cartesian4(1.0, 0.0, 0.0, 1.0));
+                
+                modelMaterial.setValue('diffuse', HIGHLIGHT);
                 console.log(primitive);
+
+                prevPick = pick;
                 
                 // Popup Window
 
@@ -309,7 +326,7 @@ function startup(Cesium){
 
 if (typeof Cesium !== "undefined") {
     startup(Cesium);
-    function flyToLocation(){
+    /*function flyToLocation(){
             viewer.camera.flyTo({
             destination : Cesium.Cartesian3.fromDegrees(24.826077, 60.182098-0.012, 1500.0),
             orientation : {
@@ -319,7 +336,7 @@ if (typeof Cesium !== "undefined") {
         }
         });
     };
-    flyToLocation();
+    flyToLocation();*/
 }else if(typeof require === "function") {
 	require(["Cesium"], startup);
 }

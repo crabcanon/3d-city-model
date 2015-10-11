@@ -24,6 +24,10 @@ body {
   padding-bottom: 19px;
 }
 
+.header button {
+  margin-left: 10px;
+}
+
 /* Custom page footer */
 .footer {
   padding-top: 19px;

@@ -109,12 +109,9 @@ function startup(Cesium){
         }).otherwise(function(error){
           console.log(error);
         });
-    }
+    };
 
-
-
-
-
+    // Fly to the location with the 45 caramer desgrees
     function flyToLocation(){
         viewer.camera.flyTo({
             destination : Cesium.Cartesian3.fromDegrees(24.826077, 60.182098-0.012, 1500.0),
@@ -128,7 +125,7 @@ function startup(Cesium){
 
     flyToLocation();
  
-    
+    // Initialize the click handler for each building
     var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
     handler.setInputAction(
         function (e) {
@@ -179,7 +176,6 @@ function startup(Cesium){
     );
 
 	// Initialize the jquery datetimepicker
-
     $('#datetimepicker1').datetimepicker({
     	format: 'unixtime',
     	startDate:'+2015/05/01'
@@ -189,7 +185,6 @@ function startup(Cesium){
     });
 
     // Click to get the scatter plot
-
     $('#submit').click(function () {
         scatterPlot();
     });
@@ -203,8 +198,7 @@ function startup(Cesium){
         $('#realtime').remove();
     });
 
-    // Get data from Leanheat APIs
-     
+    // Get data from Leanheat APIs     
     function getTemperature(buildingID){
     	var data = dataToJson(buildingID);
 		return $.ajax({
@@ -221,7 +215,6 @@ function startup(Cesium){
     };
 
     // Wrap the request parameters
-
     function dataToJson(buildingID){
     	return {
     		'aggregation-level': $('#timestamp').val(),
@@ -232,7 +225,6 @@ function startup(Cesium){
     };
 
     // D3 visulisation -- Real-time Temperatures 
-
    	function realTimeComp(){
 
         $('#realtime').remove();
@@ -261,43 +253,42 @@ function startup(Cesium){
 		};
 
 
-		d3.select("#realtime").call(function(div) {
-		    div.append("div")
-		      .attr("class", "axis")
-		      .call(context.axis().orient("top"));
+		d3.select('#realtime').call(function(div) {
+		    div.append('div')
+		      .attr('class', 'axis')
+		      .call(context.axis().orient('top'));
 
-		    div.selectAll(".horizon")
+		    div.selectAll('.horizon')
 		      .data([primary])
-		      .enter().append("div")
-		      .attr("class", "horizon")
+		      .enter().append('div')
+		      .attr('class', 'horizon')
 		      .call(context.horizon()
 		        .height(120)
-		        .format(d3.format(".2f"))
-		        .title("Temperature"));
+		        .format(d3.format('.2f'))
+		        .title('Temperature'));
 
-		    div.selectAll(".comparison")
+		    div.selectAll('.comparison')
 		      .data([[primary, secondary]])
-		      .enter().append("div")
-		      .attr("class", "comparison")
+		      .enter().append('div')
+		      .attr('class', 'comparison')
 		      .call(context.comparison()
 		        .height(120)
-		        .formatChange(d3.format(".1f%"))
-		        .title("Daily Change"));
+		        .formatChange(d3.format('.1f%'))
+		        .title('Daily Change'));
 
-		    div.append("div")
-		      .attr("class", "rule")
+		    div.append('div')
+		      .attr('class', 'rule')
 		      .call(context.rule());
 		});
 
-		context.on("focus", function(i) {
-		    format = d3.format(".1f");
-		    d3.selectAll(".horizon .value").style("right", i== null ? null : context.size() - i + "px")
-		      .text(format(primary.valueAt(Math.floor(i))) + "\u00B0C");
+		context.on('focus', function(i) {
+		    format = d3.format('.1f');
+		    d3.selectAll('.horizon .value').style('right', i== null ? null : context.size() - i + 'px')
+		      .text(format(primary.valueAt(Math.floor(i))) + '\u00B0C');
 		});
    	};
 
     // D3 Visualization -- Scatter Plot
-
     function scatterPlot() {
         $('#scatter').remove();
         $('#visualization').append('<div id="scatter"><svg></svg></div>');
@@ -309,9 +300,9 @@ function startup(Cesium){
                         .color(d3.scale.category10().range());
 
           //Configure how the tooltip looks.
-          chart.tooltipContent(function(key) {
-              return '<h3>' + key + '</h3>';
-          });
+          // chart.tooltipContent(function(key) {
+          //     return '<h3>' + key + '</h3>';
+          // });
 
           //Axis settings
           chart.xAxis.tickFormat(d3.format('.02f'));
@@ -344,7 +335,7 @@ function startup(Cesium){
 
           for (i = 0; i < groups; i++) {
             data.push({
-              key: 'Group ' + i,
+              key: 'Building ' + i,
               values: []
             });
 
@@ -353,7 +344,7 @@ function startup(Cesium){
                 x: getRandomInt(1, 50)
               , y: getRandom(15, 25)
               , size: Math.random()   //Configure the size of each scatter point
-              , shape: (Math.random() > 0.95) ? shapes[j % 6] : "circle"  //Configure the shape of each scatter point.
+              , shape: (Math.random() > 0.95) ? shapes[j % 6] : 'circle'  //Configure the shape of each scatter point.
               });
             }
           }
@@ -362,8 +353,8 @@ function startup(Cesium){
     };
 };
 
-if (typeof Cesium !== "undefined") {
+if (typeof Cesium !== 'undefined') {
     startup(Cesium);
-}else if(typeof require === "function") {
-	require(["Cesium"], startup);
+}else if(typeof require === 'function') {
+	require(['Cesium'], startup);
 }

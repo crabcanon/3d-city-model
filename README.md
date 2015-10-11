@@ -1,6 +1,8 @@
 # 3d-city-model
 
-This project is for the course [Maa-123.C - 3D City Model Hackathon](https://mycourses.aalto.fi/course/view.php?id=10999).
+* This project is for the course [Maa-123.C - 3D City Model Hackathon](https://mycourses.aalto.fi/course/view.php?id=10999).
+* The concept is to monitor data of buildings by using a variety of interactive data visualization methods. The combination of 2D&3D visualizations provide a possibility for emergency departments to intuitively monitor the real-time data and rapidly respond to the crisis of public buildings.    
+* [Live Demo](https://3dcity.firebaseapp.com/)
 
 ## About 3d-city-model
 

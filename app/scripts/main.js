@@ -253,38 +253,38 @@ function startup(Cesium){
 		};
 
 
-		d3.select('#realtime').call(function(div) {
-		    div.append('div')
-		      .attr('class', 'axis')
-		      .call(context.axis().orient('top'));
+		d3.select("#realtime").call(function(div) {
+		    div.append("div")
+		      .attr("class", "axis")
+		      .call(context.axis().orient("top"));
 
-		    div.selectAll('.horizon')
+		    div.selectAll(".horizon")
 		      .data([primary])
-		      .enter().append('div')
-		      .attr('class', 'horizon')
+		      .enter().append("div")
+		      .attr("class", "horizon")
 		      .call(context.horizon()
 		        .height(120)
-		        .format(d3.format('.2f'))
-		        .title('Temperature'));
+		        .format(d3.format(".2f"))
+		        .title("Temperature"));
 
-		    div.selectAll('.comparison')
+		    div.selectAll(".comparison")
 		      .data([[primary, secondary]])
-		      .enter().append('div')
-		      .attr('class', 'comparison')
+		      .enter().append("div")
+		      .attr("class", "comparison")
 		      .call(context.comparison()
 		        .height(120)
-		        .formatChange(d3.format('.1f%'))
-		        .title('Daily Change'));
+		        .formatChange(d3.format(".1f%"))
+		        .title("Daily Change"));
 
-		    div.append('div')
-		      .attr('class', 'rule')
+		    div.append("div")
+		      .attr("class", "rule")
 		      .call(context.rule());
 		});
 
-		context.on('focus', function(i) {
-		    format = d3.format('.1f');
-		    d3.selectAll('.horizon .value').style('right', i== null ? null : context.size() - i + 'px')
-		      .text(format(primary.valueAt(Math.floor(i))) + '\u00B0C');
+		context.on("focus", function(i) {
+		    format = d3.format(".1f");
+		    d3.selectAll(".horizon .value").style("right", i== null ? null : context.size() - i + "px")
+		      .text(format(primary.valueAt(Math.floor(i))) + "\u00B0C");
 		});
    	};
 
@@ -344,7 +344,7 @@ function startup(Cesium){
                 x: getRandomInt(1, 50)
               , y: getRandom(15, 25)
               , size: Math.random()   //Configure the size of each scatter point
-              , shape: (Math.random() > 0.95) ? shapes[j % 6] : 'circle'  //Configure the shape of each scatter point.
+              , shape: (Math.random() > 0.95) ? shapes[j % 6] : "circle"  //Configure the shape of each scatter point.
               });
             }
           }
@@ -353,8 +353,8 @@ function startup(Cesium){
     };
 };
 
-if (typeof Cesium !== 'undefined') {
+if (typeof Cesium !== "undefined") {
     startup(Cesium);
-}else if(typeof require === 'function') {
-	require(['Cesium'], startup);
+}else if(typeof require === "function") {
+	require(["Cesium"], startup);
 }

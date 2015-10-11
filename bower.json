@@ -7,11 +7,8 @@
     "cubism": "~1.6.0",
     "datetimepicker": "~2.4.5",
     "moment": "~2.10.6",
-<<<<<<< HEAD
-    "d3": "~3.5.6"
-=======
+    "d3": "~3.5.6",
     "mockjs": "~0.1.10"
->>>>>>> 6f70662348b1008612ac0faf9042a65a1ca4c5c5
   },
   "overrides": {
     "bootstrap": {

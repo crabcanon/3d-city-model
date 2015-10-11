@@ -45,7 +45,15 @@ function startup(Cesium){
         '49-418-1-859_Building_LOD1.bgltf',
         '49-418-1-945_Building_LOD1.bgltf']
     
-    var viewer = new Cesium.Viewer('cesiumContainer');
+    var viewer = new Cesium.Viewer('cesiumContainer', 
+        { 
+            timeline : false,
+            navigationHelpButton : false,
+            homeButton : false,
+            animation : false,
+            geocoder : false,
+            selectionIndicator : false,
+        });
     var scene = viewer.scene;
     var camera = new Cesium.Camera(scene);
     

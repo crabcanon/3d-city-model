@@ -188,6 +188,21 @@ function startup(Cesium){
     	format: 'unixtime'
     });
 
+    // Click to get the scatter plot
+
+    $('#submit').click(function () {
+        scatterPlot();
+    });
+
+    // Remove buttons
+    $('#closeScatter').click(function (){
+        $('#scatter').remove();
+    });
+
+    $('#closeRealtime').click(function (){
+        $('#realtime').remove();
+    });
+
     // Get data from Leanheat APIs
      
     function getTemperature(buildingID){
@@ -217,60 +232,6 @@ function startup(Cesium){
     };
 
     // D3 visulisation -- Real-time Temperatures 
-  //  	function realTimeChart(){
-  //  		function random(name) {
-	 //   		var value = 0,
-	 //   			values = [],
-	 //   			i = 0,
-	 //   			last;
-
-	 //   		return context.metric(function (start, stop, step, callback) {
-	 //   			start = +start, stop = +stop;
-		// 	    if (isNaN(last)) last = start;
-		// 	    while (last < stop) {
-		// 	      last += step;
-		// 	      value = Math.max(10, Math.min(20, value + .8 * Math.random() - .4 + .2 * Math.cos(i += .2)));
-		// 	      values.push(value);
-		// 	    }
-		// 	    callback(null, values = values.slice((start - stop) / step));
-	 //   		}, name);
-	 //   	};
-
-	 //   	var context = cubism.context()
-		//     .serverDelay(0)
-		//     .clientDelay(0)
-		//     .step(1e3)
-		//     .size(960);
-
-		// var Room01 = random('Room01'),
-		//     Room02 = random('Room02');
-		//     Room03 = random('Room03');
-		//     Room04 = random('Room04');
-		//     Room05 = random('Room05');
-
-
-		// return d3.select("#realtime").call(function(div) {
-				  		
-	 //  		div.append('div')
-	 //  		   .attr('class', 'axis')
-	 //  		   .call(context.axis().orient('top'));
-
-	 //  		div.selectAll('.horizon')
-		//        .data([Room01, Room02, Room03, Room04, Room05])
-		//        .enter().append('div')
-		//        .attr('class', 'horizon')
-		//        .call(context.horizon().extent([-20, 20]));
-
-		//     div.append('div')
-		//        .attr('class', 'rule')
-		//        .call(context.rule());
-	 //    });
-
-	 //    // On mousemove, reposition the chart values to match the rule.
-		// context.on("focus", function(i) {
-		//   d3.selectAll(".value").style("right", i == null ? null : context.size() - i + "px");
-		// });	
-  //  	};
 
    	function realTimeComp(){
 
@@ -334,6 +295,71 @@ function startup(Cesium){
 		      .text(format(primary.valueAt(Math.floor(i))) + "\u00B0C");
 		});
    	};
+
+    // D3 Visualization -- Scatter Plot
+
+    function scatterPlot() {
+        $('#scatter').remove();
+        $('#visualization').append('<div id="scatter"><svg></svg></div>');
+
+        nv.addGraph(function() {
+          var chart = nv.models.scatterChart()
+                        .showDistX(true)  
+                        .showDistY(true)
+                        .color(d3.scale.category10().range());
+
+          //Configure how the tooltip looks.
+          chart.tooltipContent(function(key) {
+              return '<h3>' + key + '</h3>';
+          });
+
+          //Axis settings
+          chart.xAxis.tickFormat(d3.format('.02f'));
+          chart.yAxis.tickFormat(d3.format('.02f'));
+
+          //We want to show shapes other than circles.
+          // chart.scatter.onlyCircles(true);
+
+          var myData = randomData(40,1);
+          d3.select('#scatter svg')
+              .datum(myData)
+              .call(chart);
+
+          nv.utils.windowResize(chart.update);
+
+          return chart;
+        });
+
+        function getRandom(min, max) {
+            return Math.random() * (max - min) + min;
+        };
+        function getRandomInt(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        };
+
+        function randomData(groups, points) { //# groups,# points per group
+          var data = [],
+              shapes = ['circle', 'cross', 'triangle-up', 'triangle-down', 'diamond', 'square'],
+              random = d3.random.normal();
+
+          for (i = 0; i < groups; i++) {
+            data.push({
+              key: 'Group ' + i,
+              values: []
+            });
+
+            for (j = 0; j < points; j++) {
+              data[i].values.push({
+                x: getRandomInt(1, 50)
+              , y: getRandom(15, 25)
+              , size: Math.random()   //Configure the size of each scatter point
+              , shape: (Math.random() > 0.95) ? shapes[j % 6] : "circle"  //Configure the shape of each scatter point.
+              });
+            }
+          }
+          return data;
+        }
+    };
 };
 
 if (typeof Cesium !== "undefined") {

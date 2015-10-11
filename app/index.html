@@ -11,9 +11,9 @@
 
     <!-- build:css styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/datetimepicker/jquery.datetimepicker.css">
-    
+    <link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.css" />
+    <link rel="stylesheet" href="/bower_components/datetimepicker/jquery.datetimepicker.css">
+    <link rel="stylesheet" href="/bower_components/nvd3/build/nv.d3.css">
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -22,10 +22,16 @@
     <!-- endbuild -->
 
     <style>
-      @import url(bower_components/cesium/Cesium/Widgets/widgets.css);
+      @import url(../bower_components/cesium/Cesium/Widgets/widgets.css);
       html, body, #cesiumContainer {
           width: 100%; height: 100%;
           overflow: hidden;
+      }
+      #scatter svg{
+        height: 400px;
+        bottom: 0px;
+        position: absolute;
+        background-color: white;
       }
     </style>
 
@@ -37,7 +43,7 @@
     
     <div class="container">
       <div class="header">
-        <form class="navbar-form navbar-right" role="search" style="margin-right: 50px;">
+        <div class="navbar-form navbar-right" role="search" style="margin-right: 50px;">
           <div class="form-group">
             From: <input type="text" id="datetimepicker1" placeholder="Time from:">
           </div>
@@ -51,8 +57,10 @@
               <option value="1d">1 day</option>
             </select>
           </div>
-          <!-- <button type="submit" class="btn btn-default">Submit</button> -->
-        </form>
+          <button id="submit" class="btn btn-md btn-success" style="margin-left: 10px;">Scatter Plot</button>
+          <button id="closeScatter" class="btn btn-md btn-success" style="margin-left: 10px;">Close Scatter Plot</button>
+          <button id="closeRealtime" class="btn btn-md btn-success" style="margin-left: 10px;">Close Real-Time</button>
+        </div>
         <h3 class="text-muted">AHYE</h3>
       </div>
 
@@ -80,29 +88,30 @@
 
     <!-- build:js scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
+    <script src="/bower_components/jquery/dist/jquery.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
     
     <!-- build:js scripts/plugins.js -->
-    <script src="bower_components/cesium/CesiumUnminified/Cesium.js"></script>
-    <script src="bower_components/datetimepicker/jquery.datetimepicker.js"></script>
-    <script src="bower_components/d3/d3.js"></script>
-    <script src="bower_components/cubism/cubism.v1.js"></script>
-    <script src="bower_components/moment/moment.js"></script>
-    <script src="bower_components/bootstrap/js/affix.js"></script>
-    <script src="bower_components/bootstrap/js/alert.js"></script>
-    <script src="bower_components/bootstrap/js/dropdown.js"></script>
-    <script src="bower_components/bootstrap/js/tooltip.js"></script>
-    <script src="bower_components/bootstrap/js/modal.js"></script>
-    <script src="bower_components/bootstrap/js/transition.js"></script>
-    <script src="bower_components/bootstrap/js/button.js"></script>
-    <script src="bower_components/bootstrap/js/popover.js"></script>
-    <script src="bower_components/bootstrap/js/carousel.js"></script>
-    <script src="bower_components/bootstrap/js/scrollspy.js"></script>
-    <script src="bower_components/bootstrap/js/collapse.js"></script>
-    <script src="bower_components/bootstrap/js/tab.js"></script>
-    <script src="bower_components/mockjs/dist/mock.js"></script>
+    <script src="/bower_components/cesium/CesiumUnminified/Cesium.js"></script>
+    <script src="/bower_components/datetimepicker/jquery.datetimepicker.js"></script>
+    <script src="/bower_components/d3/d3.js"></script>
+    <script src="/bower_components/nvd3/build/nv.d3.js"></script>
+    <script src="/bower_components/cubism/cubism.v1.js"></script>
+    <script src="/bower_components/moment/moment.js"></script>
+    <script src="/bower_components/bootstrap/js/affix.js"></script>
+    <script src="/bower_components/bootstrap/js/alert.js"></script>
+    <script src="/bower_components/bootstrap/js/dropdown.js"></script>
+    <script src="/bower_components/bootstrap/js/tooltip.js"></script>
+    <script src="/bower_components/bootstrap/js/modal.js"></script>
+    <script src="/bower_components/bootstrap/js/transition.js"></script>
+    <script src="/bower_components/bootstrap/js/button.js"></script>
+    <script src="/bower_components/bootstrap/js/popover.js"></script>
+    <script src="/bower_components/bootstrap/js/carousel.js"></script>
+    <script src="/bower_components/bootstrap/js/scrollspy.js"></script>
+    <script src="/bower_components/bootstrap/js/collapse.js"></script>
+    <script src="/bower_components/bootstrap/js/tab.js"></script>
+    <script src="/bower_components/mockjs/dist/mock.js"></script>
     <!-- endbuild -->
     
     <!-- build:js scripts/main.js -->

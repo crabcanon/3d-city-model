@@ -40,6 +40,14 @@ body {
   background: white;
 }
 
+/*#scatter svg{
+  position: absolute; 
+  bottom: 0px;
+  height: 240px; 
+  background: white;
+  width: 100%;
+}*/
+
 .axis {
   bottom: 240px;
   background-color: white;

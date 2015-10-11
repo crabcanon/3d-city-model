@@ -7,7 +7,7 @@
 ## About 3d-city-model
 
 * This project is generated with [yo gulp-webapp](https://github.com/yeoman/generator-gulp-webapp).
-* @licence GNU Lesser General Public License Version 3.0
+* [@licence GNU Lesser General Public License Version 3.0](http://www.gnu.org/licenses/lgpl-3.0.html)
 
 ## Tech-stack
 

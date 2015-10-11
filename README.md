@@ -16,7 +16,6 @@ This project is for the course [Maa-123.C - 3D City Model Hackathon](https://myc
 
 ## Getting Started
 
-- Install dependencies: `npm install --global yo gulp bower`
 - Run `npm install` in your folder where you put this code package
 - Run `bower install` in your folder where you put this code package to install pre-defined bower dependencies
 - Run `gulp serve` to preview and watch for changes

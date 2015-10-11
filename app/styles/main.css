@@ -7,8 +7,8 @@ body {
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .footer {
-  padding-left: 15px;
-  padding-right: 15px;
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 /* Custom page header */
@@ -29,6 +29,15 @@ body {
   padding-top: 19px;
   color: #777;
   border-top: 1px solid #e5e5e5;
+}
+
+/* Data Visualization Chart -- Real-time Temperatures */
+
+#realtime{
+  position: absolute; 
+  bottom: 0px;
+  height: 240px; 
+  background: white;
 }
 
 .axis {
@@ -110,7 +119,7 @@ body {
 
   /* Space out the masthead */
   .header {
-    margin-bottom: 30px;
+    margin-bottom: 0px;
   }
 
 }

@@ -208,66 +208,70 @@ function startup(Cesium){
     	};
     };
 
-    // D3 visulisation -- Real-time Temperatures
-   	function realTimeChart(){
-   		function random(name) {
-	   		var value = 0,
-	   			values = [],
-	   			i = 0,
-	   			last;
+    // D3 visulisation -- Real-time Temperatures 
+  //  	function realTimeChart(){
+  //  		function random(name) {
+	 //   		var value = 0,
+	 //   			values = [],
+	 //   			i = 0,
+	 //   			last;
 
-	   		return context.metric(function (start, stop, step, callback) {
-	   			start = +start, stop = +stop;
-			    if (isNaN(last)) last = start;
-			    while (last < stop) {
-			      last += step;
-			      value = Math.max(10, Math.min(20, value + .8 * Math.random() - .4 + .2 * Math.cos(i += .2)));
-			      values.push(value);
-			    }
-			    callback(null, values = values.slice((start - stop) / step));
-	   		}, name);
-	   	};
+	 //   		return context.metric(function (start, stop, step, callback) {
+	 //   			start = +start, stop = +stop;
+		// 	    if (isNaN(last)) last = start;
+		// 	    while (last < stop) {
+		// 	      last += step;
+		// 	      value = Math.max(10, Math.min(20, value + .8 * Math.random() - .4 + .2 * Math.cos(i += .2)));
+		// 	      values.push(value);
+		// 	    }
+		// 	    callback(null, values = values.slice((start - stop) / step));
+	 //   		}, name);
+	 //   	};
 
-	   	var context = cubism.context()
-		    .serverDelay(0)
-		    .clientDelay(0)
-		    .step(1e3)
-		    .size(960);
+	 //   	var context = cubism.context()
+		//     .serverDelay(0)
+		//     .clientDelay(0)
+		//     .step(1e3)
+		//     .size(960);
 
-		var Room01 = random('Room01'),
-		    Room02 = random('Room02');
-		    Room03 = random('Room03');
-		    Room04 = random('Room04');
-		    Room05 = random('Room05');
+		// var Room01 = random('Room01'),
+		//     Room02 = random('Room02');
+		//     Room03 = random('Room03');
+		//     Room04 = random('Room04');
+		//     Room05 = random('Room05');
 
 
-		return d3.select("#realtime").call(function(div) {
+		// return d3.select("#realtime").call(function(div) {
 				  		
-	  		div.append('div')
-	  		   .attr('class', 'axis')
-	  		   .call(context.axis().orient('top'));
+	 //  		div.append('div')
+	 //  		   .attr('class', 'axis')
+	 //  		   .call(context.axis().orient('top'));
 
-	  		div.selectAll('.horizon')
-		       .data([Room01, Room02, Room03, Room04, Room05])
-		       .enter().append('div')
-		       .attr('class', 'horizon')
-		       .call(context.horizon().extent([-20, 20]));
+	 //  		div.selectAll('.horizon')
+		//        .data([Room01, Room02, Room03, Room04, Room05])
+		//        .enter().append('div')
+		//        .attr('class', 'horizon')
+		//        .call(context.horizon().extent([-20, 20]));
 
-		    div.append('div')
-		       .attr('class', 'rule')
-		       .call(context.rule());
-	    });
+		//     div.append('div')
+		//        .attr('class', 'rule')
+		//        .call(context.rule());
+	 //    });
 
-	    // On mousemove, reposition the chart values to match the rule.
-		context.on("focus", function(i) {
-		  d3.selectAll(".value").style("right", i == null ? null : context.size() - i + "px");
-		});	
-   	};
+	 //    // On mousemove, reposition the chart values to match the rule.
+		// context.on("focus", function(i) {
+		//   d3.selectAll(".value").style("right", i == null ? null : context.size() - i + "px");
+		// });	
+  //  	};
 
    	function realTimeComp(){
+
+        $('#realtime').remove();
+        $('#visualization').append('<div id="realtime"></div>');
+
    		var context= cubism.context()
 		var primary = temperature(),
-    	secondary = primary.shift(- 24 * 60 * 60 * 1000);
+    	    secondary = primary.shift(- 24 * 60 * 60 * 1000);
 
 		function temperature() {
 		  var 	value = 0,
@@ -280,7 +284,7 @@ function startup(Cesium){
 			    if (isNaN(last)) last = start;
 			    while (last < stop) {
 			      last += step;
-			      value = Math.max(15, Math.min(20, value + .8 * Math.random() - .4 + .2 * Math.cos(i += .2)));
+			      value = Math.max(2, Math.min(15, value + .8 * Math.random() - .4 + .2 * Math.cos(i += .2)));
 			      values.push(value);
 			    }
 			    callback(null, values = values.slice((start - stop) / step * 10));
@@ -288,7 +292,7 @@ function startup(Cesium){
 		};
 
 
-		d3.select("#realtimeOne").call(function(div) {
+		d3.select("#realtime").call(function(div) {
 		    div.append("div")
 		      .attr("class", "axis")
 		      .call(context.axis().orient("top"));
@@ -326,17 +330,6 @@ function startup(Cesium){
 
 if (typeof Cesium !== "undefined") {
     startup(Cesium);
-    /*function flyToLocation(){
-            viewer.camera.flyTo({
-            destination : Cesium.Cartesian3.fromDegrees(24.826077, 60.182098-0.012, 1500.0),
-            orientation : {
-            heading : Cesium.Math.toRadians(0.0),
-            pitch : Cesium.Math.toRadians(-45.0),
-            roll : 0.0
-        }
-        });
-    };
-    flyToLocation();*/
 }else if(typeof require === "function") {
 	require(["Cesium"], startup);
 }

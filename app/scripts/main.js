@@ -63,7 +63,7 @@ function startup(Cesium){
                   new Cesium.Cartesian4(1.0, 1.0, 0.0, 1.0), // YELLOW
                   new Cesium.Cartesian4(0.0, 1.0, 0.0, 1.0)] // GREEN
 
-    var GREY = new Cesium.Cartesian4(0.7, 0.7, 0.7, 1.0);
+    var GREY = new Cesium.Cartesian4(1.0, 1.0, 1.0, 1.2);
     var HIGHLIGHT = new Cesium.Cartesian4(0.0, 1.0, 1.0, 1.0);
 
     var buildings = [];

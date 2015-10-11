@@ -1,0 +1,9 @@
+{
+  "firebase": "3dcity",
+  "public": "app",
+  "ignore": [
+    "firebase.json",
+    "**/.*",
+    "**/node_modules/**"
+  ]
+}

@@ -58,67 +58,6 @@ function startup(Cesium){
     var COLORS = [new Cesium.Cartesian4(1.0, 0.0, 0.0, 1.0), // RED
                   new Cesium.Cartesian4(1.0, 1.0, 0.0, 1.0), // YELLOW
                   new Cesium.Cartesian4(0.0, 1.0, 0.0, 1.0)] // GREEN
-    
-    var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
-    handler.setInputAction(
-        function (e) {
-            var pick = scene.pick(e.position);
-            if (Cesium.defined(pick) && Cesium.defined(pick.node) && Cesium.defined(pick.mesh)) {
-                var primitive = pick.primitive;
-                var id = primitive._id;
-                var modelMaterial = pick.mesh.materials[0];
-                modelMaterial.setValue('diffuse', new Cesium.Cartesian4(1.0, 0.0, 0.0, 1.0));
-<<<<<<< HEAD
-                console.log(primitive);
-
-                //Fetch real-time temperatures for each clickable building
-                getTemperature(id);
-=======
-                
-                popup = new Cesium.InfoBox('cesiumContainer');
-                infoboxmodel = popup.viewModel;
-                infoboxmodel.titleText = "TESTING";
-                infoboxmodel.showInfo = true;
-                infoboxmodel.description = "Building number: " + primitive.id; // Add data from JSON
-                console.log(popup.viewModel);
-
->>>>>>> 3a85100d9c87f0d76fc1339ffbe751b5fd87588e
-            }
-        },
-        Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
-    );
-
-    $('#datetimepicker1').datetimepicker({
-    	format: 'unixtime',
-    	startDate:'+2015/05/01'
-    });
-    $('#datetimepicker2').datetimepicker({
-    	format: 'unixtime'
-    });
-     
-    function getTemperature(buildingID){
-    	var data = dataToJson(buildingID);
-		return $.ajax({
-        	url: 'http://54.170.172.31:3000/api/temperatures',
-        	type: 'get',
-        	data: data,
-        	success: function (data) {
-        		console.log(data);
-        	},
-        	error: function(data){
-        		console.log(data);
-        	}
-        });
-    };
-
-    function dataToJson(buildingID){
-    	return {
-    		'aggregation-level': $('#timestamp').val(),
-    		'apartments': buildingID,
-    		'from': $('#datetimepicker1').val(),
-    		'to': $('#datetimepicker2').val()
-    	};
-    };
 
     var buildings = [];
 
@@ -138,8 +77,8 @@ function startup(Cesium){
         model.id = i;
         buildings.push(model);
     }
- 
-    // function flyToRectangle() {
+
+        // function flyToRectangle() {
 
     //     var west = 24.803748;
     //     var south = 60.178774 -0.035;
@@ -171,27 +110,210 @@ function startup(Cesium){
     // flyToRectangle();
 
     function flyToLocation(){
-            viewer.camera.flyTo({
+        viewer.camera.flyTo({
             destination : Cesium.Cartesian3.fromDegrees(24.826077, 60.182098-0.012, 1500.0),
             orientation : {
-            heading : Cesium.Math.toRadians(0.0),
-            pitch : Cesium.Math.toRadians(-45.0),
-            roll : 0.0
-        }
+	            heading : Cesium.Math.toRadians(0.0),
+	            pitch : Cesium.Math.toRadians(-45.0),
+	            roll : 0.0
+        	}
         });
-    }
-<<<<<<< HEAD
-    flyToRectangle();
+    };
+
+    flyToLocation();
+ 
+    
+    var handler = new Cesium.ScreenSpaceEventHandler(scene.canvas);
+    handler.setInputAction(
+        function (e) {
+            var pick = scene.pick(e.position);
+            if (Cesium.defined(pick) && Cesium.defined(pick.node) && Cesium.defined(pick.mesh)) {
+                var primitive = pick.primitive;
+                var id = primitive._id;
+                var modelMaterial = pick.mesh.materials[0];
+                modelMaterial.setValue('diffuse', new Cesium.Cartesian4(1.0, 0.0, 0.0, 1.0));
+                console.log(primitive);
+                
+                // Popup Window
+
+                // popup = new Cesium.InfoBox('cesiumContainer');
+                // infoboxmodel = popup.viewModel;
+                // infoboxmodel.titleText = "TESTING";
+                // infoboxmodel.showInfo = true;
+                // infoboxmodel.description = "Building number: " + primitive.id; // Add data from JSON
+                // console.log(popup.viewModel);
+
+                //Fetch real-time temperatures for each clickable building
+                getTemperature(id);
+                // realTimeChart();
+                realTimeComp();
+
+            }
+        },
+        Cesium.ScreenSpaceEventType.LEFT_DOUBLE_CLICK
+    );
+
+	// Initialize the jquery datetimepicker
+
+    $('#datetimepicker1').datetimepicker({
+    	format: 'unixtime',
+    	startDate:'+2015/05/01'
+    });
+    $('#datetimepicker2').datetimepicker({
+    	format: 'unixtime'
+    });
+
+    // Get data from Leanheat APIs
+     
+    function getTemperature(buildingID){
+    	var data = dataToJson(buildingID);
+		return $.ajax({
+        	url: 'http://54.170.172.31:3000/api/temperatures',
+        	type: 'get',
+        	data: data,
+        	success: function (data) {
+        		console.log(data);
+        	},
+        	error: function(data){
+        		console.log(data);
+        	}
+        });
+    };
+
+    // Wrap the request parameters
+
+    function dataToJson(buildingID){
+    	return {
+    		'aggregation-level': $('#timestamp').val(),
+    		'apartments': buildingID,
+    		'from': $('#datetimepicker1').val(),
+    		'to': $('#datetimepicker2').val()
+    	};
+    };
+
+    // D3 visulisation -- Timeline 
+
+   	function realTimeChart(){
+   		function random(name) {
+	   		var value = 0,
+	   			values = [],
+	   			i = 0,
+	   			last;
+
+	   		return context.metric(function (start, stop, step, callback) {
+	   			start = +start, stop = +stop;
+			    if (isNaN(last)) last = start;
+			    while (last < stop) {
+			      last += step;
+			      value = Math.max(10, Math.min(20, value + .8 * Math.random() - .4 + .2 * Math.cos(i += .2)));
+			      values.push(value);
+			    }
+			    callback(null, values = values.slice((start - stop) / step));
+	   		}, name);
+	   	};
+
+	   	var context = cubism.context()
+		    .serverDelay(0)
+		    .clientDelay(0)
+		    .step(1e3)
+		    .size(960);
+
+		var Room01 = random('Room01'),
+		    Room02 = random('Room02');
+		    Room03 = random('Room03');
+		    Room04 = random('Room04');
+		    Room05 = random('Room05');
+
+
+		return d3.select("#realtime").call(function(div) {
+				  		
+	  		div.append('div')
+	  		   .attr('class', 'axis')
+	  		   .call(context.axis().orient('top'));
+
+	  		div.selectAll('.horizon')
+		       .data([Room01, Room02, Room03, Room04, Room05])
+		       .enter().append('div')
+		       .attr('class', 'horizon')
+		       .call(context.horizon().extent([-20, 20]));
+
+		    div.append('div')
+		       .attr('class', 'rule')
+		       .call(context.rule());
+	    });
+
+	    // On mousemove, reposition the chart values to match the rule.
+		context.on("focus", function(i) {
+		  d3.selectAll(".value").style("right", i == null ? null : context.size() - i + "px");
+		});	
+   	};
+
+
+   	function realTimeComp(){
+   		var context= cubism.context()
+		var primary = temperature(),
+    	secondary = primary.shift(- 24 * 60 * 60 * 1000);
+
+		function temperature() {
+		  var 	value = 0,
+	   			values = [],
+	   			i = 0,
+	   			last;
+
+	   		return context.metric(function (start, stop, step, callback) {
+	   			start = +start, stop = +stop;
+			    if (isNaN(last)) last = start;
+			    while (last < stop) {
+			      last += step;
+			      value = Math.max(15, Math.min(20, value + .8 * Math.random() - .4 + .2 * Math.cos(i += .2)));
+			      values.push(value);
+			    }
+			    callback(null, values = values.slice((start - stop) / step * 10));
+	   		});
+		};
+
+
+		d3.select("#realtimeOne").call(function(div) {
+		    div.append("div")
+		      .attr("class", "axis")
+		      .call(context.axis().orient("top"));
+
+		    div.selectAll(".horizon")
+		      .data([primary])
+		      .enter().append("div")
+		      .attr("class", "horizon")
+		      .call(context.horizon()
+		        .height(120)
+		        .format(d3.format(".2f"))
+		        .title("Temperature"));
+
+		    div.selectAll(".comparison")
+		      .data([[primary, secondary]])
+		      .enter().append("div")
+		      .attr("class", "comparison")
+		      .call(context.comparison()
+		        .height(120)
+		        .formatChange(d3.format(".1f%"))
+		        .title("Daily Change"));
+
+		    div.append("div")
+		      .attr("class", "rule")
+		      .call(context.rule());
+		});
+
+		context.on("focus", function(i) {
+		    format = d3.format(".1f");
+		    d3.selectAll(".horizon .value").style("right", i== null ? null : context.size() - i + "px")
+		      .text(format(primary.valueAt(Math.floor(i))) + "\u00B0C");
+		});
+   	};
+
+
+
 };
 
 if (typeof Cesium !== "undefined") {
-	startup(Cesium);
-=======
-    flyToLocation();
-  }
-  if (typeof Cesium !== "undefined") {
     startup(Cesium);
->>>>>>> 3a85100d9c87f0d76fc1339ffbe751b5fd87588e
 } else if (typeof require === "function") {
 	require(["Cesium"], startup);
 }

@@ -36,21 +36,6 @@
     
     <div class="container">
       <div class="header">
-        <!-- <ul class="nav nav-pills pull-right">
-          <li>
-            <select class="form-control" id="timestamp">
-              <option value="10min">10 min</option>
-              <option value="1h">1 hour</option>
-              <option value="1d">1 day</option>
-            </select>
-          </li>
-          <li>
-            <input type="text" id="datetimepicker1">
-          </li>
-          <li> 
-            <input type="text" id="datetimepicker2">
-          </li>
-        </ul> -->
         <form class="navbar-form navbar-right" role="search" style="margin-right: 50px;">
           <div class="form-group">
             From: <input type="text" id="datetimepicker1" placeholder="Time from:">
@@ -70,11 +55,9 @@
         <h3 class="text-muted">3D-City-Model</h3>
       </div>
 
-      <div>
-        
-      </div>
-
       <div id="cesiumContainer"></div>
+      <div id="realtime" style="position: absolute; bottom: 0px;height: 155px; background: white;"></div>
+      <div id="realtimeOne" style="position: absolute; bottom: 0px;height: 240px; background: white;"></div>
 
 
       <div class="footer">
@@ -101,6 +84,8 @@
     <!-- build:js scripts/plugins.js -->
     <script src="/bower_components/cesium/Cesium/Cesium.js"></script>
     <script src="/bower_components/datetimepicker/jquery.datetimepicker.js"></script>
+    <script src="/bower_components/d3/d3.js"></script>
+    <script src="/bower_components/cubism/cubism.v1.js"></script>
     <script src="/bower_components/moment/moment.js"></script>
     <script src="/bower_components/bootstrap/js/affix.js"></script>
     <script src="/bower_components/bootstrap/js/alert.js"></script>

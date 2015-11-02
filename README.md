@@ -1,13 +1,13 @@
 # 3d-city-model
 
-* This project is for the course [Maa-123.C - 3D City Model Hackathon](https://mycourses.aalto.fi/course/view.php?id=10999).
+* This project is initially for the [3D City Model Hackathon](http://3dcitymodelhackathon.com/).
 * The concept is to monitor data of buildings by using a variety of interactive data visualization methods. The combination of 2D&3D visualizations provide a possibility for emergency departments to intuitively monitor the real-time data and rapidly respond to the crisis of public buildings.    
 * [Live Demo](https://3dcity.firebaseapp.com/)
 
 ## About 3d-city-model
 
 * This project is generated with [yo gulp-webapp](https://github.com/yeoman/generator-gulp-webapp).
-* @licence GNU Lesser General Public License Version 3.0
+* licence GNU Lesser General Public License Version 3.0
 
 ## Tech-stack
 
@@ -18,8 +18,8 @@
 
 ## Getting Started
 
-- Run `npm install` in your folder where you put this code package
-- Run `bower install` in your folder where you put this code package to install pre-defined bower dependencies
+- Fork and clone this repo
+- Run `npm install && bower install`
 - Run `gulp serve` to preview and watch for changes
 - Run `bower install --save <package>` to install frontend dependencies
 - Run `gulp serve:test` to run the tests in the browser

@@ -36,7 +36,11 @@
 * [virtualcityMap](http://hosting.virtualcitysystems.de/demos/espoo/map/map.html) -- Live Demo
 * [Berlin_Texture_Demo](http://www.3dcitydb.net/3dcitydb-web-map/0.92/3dwebclient/index.html?title=Berlin_Texture_Demo) -- Live Demo
 
+---
 
+> [yehuang.me](https://yehuang.me) &nbsp;&middot;&nbsp;
+> GitHub [@crabcanon](https://github.com/crabcanon) &nbsp;&middot;&nbsp;
+> Gmail [@sysuhuangye](<mailto:sysuhuangye@gmail.com>)
 
 
 
